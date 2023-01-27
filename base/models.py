@@ -13,5 +13,5 @@ class Task(models.Model):     #db structure definition
     def __str__(self):
         return self.title
     
-     :                     #set the default ordering, complete status
+    class Meta:                    #set the default ordering, complete status
         ordering = ['complete']
