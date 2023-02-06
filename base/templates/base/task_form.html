@@ -1,10 +1,18 @@
-<h4>List Form</h4>
+{% extends 'base/main.html' %}
+{% block content %}
 
-<a href="{% url 'tasks' %}">Go back</a>   
+<div class="hearder-bar">
+    <a href="{% url 'tasks' %}">&#8592; Back</a>
+</div>
+
+<h4>Add an task</h4>  
 
 <form action="" method="POST">
-    {% csrf_token %}  #protest us from attacks
+    <!-- protest us from attacks -->
+    {% csrf_token %}  
     {{form.as_p}}
     <input type="submit" value="Submit">
 
 </form> 
+
+{% endblock content %}

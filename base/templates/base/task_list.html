@@ -1,20 +1,60 @@
-<h5>My To-do List app</h5>
-<a href="{% url 'task-create' %}">Add task</a>
+{% extends 'base/main.html' %}
 
-<table>
-    <tr>
-        <th>Item</th>
-        <th></th>
-    </tr>
+{% block content %}
+
+<div class="hearder-bar">
+    <div>
+        <h1>Hello {{request.user|title}}</h1>
+        <h3 style="margin: 0;"> You have <i>{{tasks.count}}</i> incomplete task{{ count|pluralize:"s"}}</h3>
+    </div>
+    
+    <!-- #requesting logIn user from the db -->
+        {%  if request.user.is_authenticated %}
+    <!-- <p>{{request.user}}</p> -->
+    <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+    <a href="{% url 'login' %}">login</a>
+    {% endif %}
+</div>
+
+
+<div class="search-add-wrapper" >
+    <form action="" method="get" style="margin-top: 20px; display: flex;">
+        <input type="text" name="search-area"  value="{{search_input}}">
+        <input class="button" type="submit" value="Search">
+    </form>
+    <a id="add-link" href="{% url 'task-create' %}">&#x2b;</a>
+</div>
+     
+
+<hr>
+<div class="task-item-wrapper">
     {% for task in tasks %}
-    <tr>
-        <td>{{task.title}}</td>
-        <td><a href="{% url 'task' task.id %}"> View</a></td>
-        <td><a href="{% url 'task-update' task.id %}"> Edit</a></td>
-        <td><a href="{% url 'task-delete' task.id %}"> Delete</a></td>
-    </tr>
+        <div class="task-wrapper">
+            {% if task.complete %}
+            <div class="task-title">
+                <div class="task-complete-icon"></div>
+                <i><s><a href="{% url 'task-update' task.id %}">{{task}}</a></s></i>
+            </div>
+            <a href="{% url 'task-delete' task.id %}" class="delete-link">&#215;</a>
+            
+            {% else %}
+            <div class="task-title">
+                <div class="task-incomplete-icon"></div>
+                <a href="{% url 'task-update' task.id %}">{{task}}</a>
+            </div>
+            <a href="{% url 'task-delete' task.id %}" class="delete-link">&#215;</a>
+            {% endif %}
+
+            
+        </div>
     {% empty %}
         <h3> No items in list</h3>
 
     {% endfor %}
-</table>
+</div>
+
+{% endblock content %}
+<!-- <h1>My To-do List app</h1>
+
+
